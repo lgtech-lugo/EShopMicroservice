@@ -1,7 +1,4 @@
-﻿using Catalog.API.Models;
-
-
-namespace Catalog.API.Products.CreateProduct;
+﻿namespace Catalog.API.Products.CreateProduct;
 
 internal record CreateProductCommand(
     string Name,

@@ -1,3 +1,5 @@
-﻿namespace Catalog.API.Exceptions;
+﻿using BuildingBlocks.Exceptions;
 
-internal class ProductNotFoundException() : Exception("Product not found");
+namespace Catalog.API.Exceptions;
+
+internal class ProductNotFoundException(Guid id) : NotFoundException("Product", id);

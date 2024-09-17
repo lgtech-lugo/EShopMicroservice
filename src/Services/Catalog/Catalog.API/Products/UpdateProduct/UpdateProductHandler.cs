@@ -2,7 +2,7 @@
 
 namespace Catalog.API.Products.UpdateProduct;
 
-internal record UpdateProductCommand(
+public record UpdateProductCommand(
     Guid Id,
     string Name,
     List<string> Category,
@@ -11,6 +11,20 @@ internal record UpdateProductCommand(
     decimal Price) : ICommand<UpdateProductResult>;
 
 internal record UpdateProductResult(bool IsSuccess);
+
+public class UpdateProductCommandValidator : AbstractValidator<UpdateProductCommand>
+{
+    public UpdateProductCommandValidator()
+    {
+        RuleFor(x => x.Id).NotEmpty();
+        RuleFor(x => x.Name)
+            .NotEmpty().WithMessage("Name is required")
+            .Length(2, 150).WithMessage("Name must be between 2 and 150 characters");
+        RuleFor(x => x.Category).NotEmpty();
+        RuleFor(x => x.ImageFile).NotEmpty();
+        RuleFor(x => x.Price).GreaterThan(0);
+    }
+}
 
 internal class UpdateProductCommandHandler(IDocumentSession session): ICommandHandler<UpdateProductCommand, UpdateProductResult>
 {
